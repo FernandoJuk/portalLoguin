@@ -36,20 +36,20 @@ function UploadAdmin() {
   const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-  
+
     arquivos.forEach((file) => {
       formData.append("arquivos", file); // campo plural
     });
-  
+
     formData.append("usuario_id", usuarioId);
     formData.append("tipo", tipo); // se quiser separar depois, podemos permitir múltiplos tipos também
-  
+
     try {
       const response = await fetch("http://localhost:5000/upload", {
         method: "POST",
         body: formData,
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         alert("Upload realizado com sucesso!");
@@ -108,7 +108,7 @@ function UploadAdmin() {
           <option value="nota">Nota</option>
           <option value="boleto">Boleto</option>
         </select>
-          <h3>Permitido selceção de diversos simultaneo</h3>
+        <h3>Permitido selceção de diversos simultaneo</h3>
         <input
           type="file"
           accept="application/pdf"
@@ -119,6 +119,9 @@ function UploadAdmin() {
 
         <button type="submit">Enviar</button>
       </form>
+      <button type="button" onClick={() => navigate("/admin/arquivos")}>
+        Gerenciar Arquivos
+      </button>
       <button style={{ backgroundColor: 'red' }} onClick={handleLogout}>Sair</button>
     </div>
   );

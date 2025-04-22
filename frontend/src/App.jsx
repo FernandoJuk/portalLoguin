@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import UploadAdmin from './pages/UploadAdmin'; // novo
+import AdminArquivos from './pages/AdminArquivos';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin/upload" element={<UploadAdmin />} /> {/* admin */}
+        <Route path="/admin/arquivos" element={<AdminArquivos />} /> {/* admin */}
       </Routes>
     </Router>
   );

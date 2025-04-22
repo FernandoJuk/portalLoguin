@@ -171,6 +171,82 @@ app.get('/usuarios', autenticarToken, async (req, res) => {
   }
 });
 
+//Rota para listar todos os arquivos (admin)
+app.get('/admin/arquivos', autenticarToken, async (req, res) => {
+  if (!req.usuario.admin) return res.status(403).send('Acesso negado');
+
+  try {
+    const result = await pool.query(`
+      SELECT a.id, a.nome_arquivo, a.tipo, a.data_envio, u.nome AS nome_usuario, u.email
+      FROM arquivos a
+      JOIN usuarios u ON a.usuario_id = u.id
+      ORDER BY a.data_envio DESC
+    `);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erro ao buscar arquivos');
+  }
+});
+
+//Rota para excluir arquivo (admin)
+
+app.delete('/admin/arquivo/:id', autenticarToken, async (req, res) => {
+  if (!req.usuario.admin) return res.status(403).send('Acesso negado');
+  
+  const id = req.params.id;
+
+  try {
+    const result = await pool.query('SELECT * FROM arquivos WHERE id = $1', [id]);
+    if (result.rows.length === 0) return res.status(404).send('Arquivo não encontrado');
+
+    const arquivo = result.rows[0];
+    const caminho = path.join(__dirname, 'uploads', arquivo.caminho);
+
+    // Apagar arquivo do disco
+    fs.unlink(caminho, (err) => {
+      if (err) console.warn('Erro ao apagar arquivo físico:', err);
+    });
+
+    await pool.query('DELETE FROM arquivos WHERE id = $1', [id]);
+
+    res.send('Arquivo excluído com sucesso');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erro ao excluir arquivo');
+  }
+});
+
+//Rota para editar tipo do arquivo (admin)
+
+app.put('/admin/arquivo/:id', autenticarToken, async (req, res) => {
+  if (!req.usuario.admin) return res.status(403).send('Acesso negado');
+
+  const id = req.params.id;
+  const { tipo } = req.body;
+
+  if (!['nota', 'boleto'].includes(tipo)) {
+    return res.status(400).send('Tipo inválido');
+  }
+
+  try {
+    const result = await pool.query(
+      'UPDATE arquivos SET tipo = $1 WHERE id = $2 RETURNING *',
+      [tipo, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).send('Arquivo não encontrado');
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erro ao atualizar arquivo');
+  }
+});
+
 const port = 5000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
