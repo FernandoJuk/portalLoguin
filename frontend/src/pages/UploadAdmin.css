@@ -1,0 +1,50 @@
+upload-admin {
+    max-width: 100px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f7f9fc;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+  }
+  
+  .upload-admin h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #f7f9fc;
+  }
+  
+  .upload-admin form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .upload-admin input[type="text"],
+  .upload-admin input[type="file"],
+  .upload-admin select,
+  .upload-admin button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .upload-admin input[type="text"]:focus,
+  .upload-admin select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .upload-admin button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .upload-admin button:hover {
+    background-color: #0056b3;
+  }
+
