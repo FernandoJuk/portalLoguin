@@ -3,6 +3,11 @@ import { redirect, useNavigate } from "react-router-dom";
 import './UploadAdmin.css';
 
 function UploadAdmin() {
+  const API_URL =
+      window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'
+        : 'http://192.168.0.111:5000'; // IP do seu PC para acesso pelo celular
+
   const navigate = useNavigate();
   const [arquivos, setArquivos] = useState([]);
   const [usuarioId, setUsuarioId] = useState("");
@@ -22,7 +27,8 @@ function UploadAdmin() {
       return;
     }
     setUsuario({ nome });
-    fetch("http://localhost:5000/usuarios", {
+    fetch(`${API_URL}/usuarios`, {
+    //fetch("http://localhost:5000/usuarios", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -45,7 +51,7 @@ function UploadAdmin() {
     formData.append("tipo", tipo); // se quiser separar depois, podemos permitir múltiplos tipos também
 
     try {
-      const response = await fetch("http://localhost:5000/upload", {
+      const response = await fetch(`${API_URL}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -75,7 +81,10 @@ function UploadAdmin() {
   };
 
   return (
+
+
     <div className="upload-admin" >
+
       <h2>USÚARIO ADMINISTRADOR</h2>
       <h2>{usuario?.nome} !</h2>
       <form onSubmit={handleUpload}>
@@ -108,21 +117,27 @@ function UploadAdmin() {
           <option value="nota">Nota</option>
           <option value="boleto">Boleto</option>
         </select>
-        <h3>Permitido selceção de diversos simultaneo</h3>
-        <input
-          type="file"
-          accept="application/pdf"
-          multiple
-          onChange={(e) => setArquivos(Array.from(e.target.files))}
-          required
-        />
+        <h3>Permitido diversos arquivos simultaneo</h3>
+        <div className="upload-file-container">
+          <input
+            type="file"
+            accept="application/pdf"
+            multiple
+            onChange={(e) => setArquivos(Array.from(e.target.files))}
+            required
+          />
+          <button type="submit" className="send-btn">Enviar</button>
+        </div>
 
-        <button type="submit">Enviar</button>
+
       </form>
-      <button type="button" onClick={() => navigate("/admin/arquivos")}>
-        Gerenciar Arquivos
-      </button>
-      <button style={{ backgroundColor: 'red' }} onClick={handleLogout}>Sair</button>
+      <div>
+        <button class="btt" type="button" onClick={() => navigate("/admin/arquivos")}>
+          Gerenciar Arquivos
+        </button>
+
+        <button className="logout-btn" onClick={handleLogout}>Sair</button>
+      </div>
     </div>
   );
 }

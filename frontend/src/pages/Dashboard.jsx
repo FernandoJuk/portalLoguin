@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 
 function Dashboard() {
+  const API_URL =
+      window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'
+        : 'http://192.168.0.111:5000'; // IP do seu PC para acesso pelo celular
+        
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
   const [arquivos, setArquivos] = useState([]);
@@ -20,7 +25,7 @@ function Dashboard() {
     setUsuario({ token, nome });
 
     // Buscar os arquivos do usuário
-    fetch("http://localhost:5000/meus-arquivos", {
+    fetch(`${API_URL}/meus-arquivos`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -42,7 +47,7 @@ function Dashboard() {
 
   const handleDownload = (id) => {
     const token = localStorage.getItem('token');
-    window.open(`http://localhost:5000/download/${id}?token=${token}`, '_blank');
+    window.open(`${API_URL}/download/${id}?token=${token}`, '_blank');
   };
   return (
     <div style={{ padding: 20 }} className="dashboard">

@@ -4,6 +4,11 @@ import React, { useState } from 'react';
 import './Signup.css'; // Para estilização, crie esse arquivo CSS também
 
 function Signup() {
+  const API_URL =
+      window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'
+        : 'http://192.168.0.111:5000'; // IP do seu PC para acesso pelo celular
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [nome, setNome] = useState('');
@@ -11,7 +16,8 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/register", {
+      const response = await fetch(`${API_URL}/register`, {
+      //const response = await fetch("http://localhost:5000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome, email, senha }),

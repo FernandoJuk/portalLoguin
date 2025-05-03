@@ -1,0 +1,102 @@
+.admin-arquivos {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+  }
+  
+  .admin-arquivos h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: space-between;
+  }
+  
+  .filtros input,
+  .filtros select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 150px;
+  }
+  
+  .lista-arquivos {
+    overflow-x: auto;
+  }
+  
+  .tabela-arquivos {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tabela-arquivos th,
+  .tabela-arquivos td {
+    border: 1px solid #ddd;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  
+  .tabela-arquivos th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .tabela-arquivos tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .botoes-acao {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+  
+  .botao-excluir {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button.delete {
+    background: none;
+    border: none;
+    color: #d11a2a;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  button.delete:hover {
+    color: #a00;
+  }
+  @media (max-width: 768px) {
+    .filtros {
+      flex-direction: column;
+    }
+  
+    .tabela-arquivos th,
+    .tabela-arquivos td {
+      font-size: 15px;
+      padding: 5px;
+    }
+  
+    .botoes-acao {
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+  

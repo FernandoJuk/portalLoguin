@@ -247,7 +247,11 @@ app.put('/admin/arquivo/:id', autenticarToken, async (req, res) => {
   }
 });
 
+// const port = 5000;
+// app.listen(port, () => {
+//   console.log(`Servidor rodando na porta ${port}`);
+// });
 const port = 5000;
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Servidor rodando na porta ${port}`);
 });

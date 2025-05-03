@@ -27,7 +27,6 @@ body {
 
   h3 {
     color: #fff; /* Melhor visibilidade do título */
-    margin-bottom: 20px;
     text-align: center;
     font-size: 24px;
     font-weight: 400;
@@ -48,7 +47,7 @@ body {
   }
   
   button {
-    background: #4facfe;
+    background: #4c94c46e;
     color: white;
     border: none;
     padding: 12px;

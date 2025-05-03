@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom"; // ⬅ importando useNavigate
-import "./Login.css"; 
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,8 +10,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    const API_URL =
+      window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'
+        : 'http://192.168.0.111:5000'; // IP do seu PC para acesso pelo celular
+
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha: password }),
@@ -22,9 +27,9 @@ const Login = () => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("nome", data.usuario.nome);
         localStorage.setItem("admin", data.usuario.admin); // salva status de admin
-      
+
         alert("Login realizado com sucesso!");
-      
+
         // Redireciona para rota específica
         if (data.usuario.admin === true) {
           navigate("/admin/upload");
